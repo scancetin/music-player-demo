@@ -1,0 +1,106 @@
+// ignore_for_file: avoid_print
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class PlayView extends StatelessWidget {
+  const PlayView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          body: Column(
+        children: [
+          const Spacer(flex: 2),
+          soundImage(),
+          const Spacer(flex: 1),
+          // customSlider(),
+          soundUtils(),
+          const Spacer(flex: 1),
+          Container(
+            color: Colors.white,
+            width: double.infinity,
+            height: 50,
+            child: const Text("temp"),
+          )
+        ],
+      )),
+    );
+  }
+
+  ClipRRect soundImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: Get.height * 0.75,
+        width: Get.width * 0.9,
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/sample.jpg"), fit: BoxFit.cover)),
+        child: Center(
+          child: CircleAvatar(
+            radius: Get.width * 0.15,
+            backgroundColor: Colors.black54,
+            child: Text("30", style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget customSlider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0),
+      child: Column(
+        children: [
+          Slider(
+            min: 0,
+            max: 180,
+            value: 15,
+            onChanged: ((value) => print("changed")),
+            onChangeEnd: ((value) => print("end")),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Text("00:00"),
+              const Text("03:00"),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  SizedBox soundUtils() {
+    return SizedBox(
+      height: Get.height * 0.1,
+      width: Get.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+            iconSize: Get.width * 0.07,
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.redAccent,
+            radius: Get.width * 0.07,
+            child: IconButton(
+              onPressed: () => print("play"),
+              icon: const Icon(Icons.play_arrow_rounded),
+              iconSize: Get.width * 0.09,
+              color: Colors.white,
+            ),
+          ),
+          IconButton(
+            onPressed: () => print("timer"),
+            icon: const Icon(Icons.timer_outlined),
+            iconSize: Get.width * 0.07,
+          ),
+        ],
+      ),
+    );
+  }
+}
