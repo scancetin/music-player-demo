@@ -39,9 +39,9 @@ class HomeView extends StatelessWidget {
       children: [
         FloatingActionButton(backgroundColor: Colors.blue, onPressed: (() => print("timer")), child: const Icon(Icons.timer_outlined, color: Colors.white)),
         const SizedBox(height: 10),
-        FloatingActionButton(backgroundColor: Colors.red, onPressed: (() => print("favorites")), child: const Icon(Icons.heart_broken_sharp, color: Colors.white)),
-        const SizedBox(height: 10),
-        FloatingActionButton(backgroundColor: Colors.black, onPressed: (() => print("settings")), child: const Icon(Icons.settings, color: Colors.white)),
+        // FloatingActionButton(backgroundColor: Colors.red, onPressed: (() => print("favorites")), child: const Icon(Icons.heart_broken_sharp, color: Colors.white)),
+        // const SizedBox(height: 10),
+        // FloatingActionButton(backgroundColor: Colors.black, onPressed: (() => print("settings")), child: const Icon(Icons.settings, color: Colors.white)),
       ],
     );
   }

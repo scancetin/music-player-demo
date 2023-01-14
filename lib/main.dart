@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      initialRoute: "play",
+      initialRoute: "home",
       getPages: [
         GetPage(name: "/home", page: () => const HomeView()),
         GetPage(name: "/play", page: () => const PlayView(), transition: Transition.downToUp),
