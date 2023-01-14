@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,9 +66,9 @@ class HomeView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       // ignore: prefer_const_literals_to_create_immutables
       children: [
-        const SoundCard(),
-        const SoundCard(),
-        const SoundCard(),
+        SoundCard(soundId: 0),
+        SoundCard(soundId: 1),
+        SoundCard(soundId: 2),
       ],
     );
   }
