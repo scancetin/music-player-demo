@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/player_controller.dart';
 import 'widgets/sound_card.dart';
+import 'package:music_player_demo/constaints.dart' as K;
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -16,14 +17,20 @@ class HomeView extends StatelessWidget {
         floatingActionButton: settings(),
         body: Column(
           children: [
+            // Expanded(
+            //   child: ListView(
+            //     children: [
+            //       playlistTemplate(),
+            //       playlistTemplate(),
+            //       playlistTemplate(),
+            //       playlistTemplate(),
+            //     ],
+            //   ),
+            // ),
             Expanded(
-              child: ListView(
-                children: [
-                  playlistTemplate(),
-                  playlistTemplate(),
-                  playlistTemplate(),
-                  playlistTemplate(),
-                ],
+              child: ListView.builder(
+                itemCount: K.playlists.length,
+                itemBuilder: (context, playlistIndex) => playlistTemplate(playlistIndex),
               ),
             ),
             Container(
@@ -49,29 +56,31 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Column playlistTemplate() {
+  Widget playlistTemplate(int playlistIndex) {
+    List<Map> playlist = K.playlistSounds[playlistIndex];
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            padding: EdgeInsets.only(left: Get.width * 0.1, top: Get.height * 0.08, bottom: 10),
+            padding: EdgeInsets.only(left: Get.width * 0.1, top: Get.height * 0, bottom: 10),
             alignment: Alignment.topLeft,
-            child: const Text("Nature", textAlign: TextAlign.left, style: TextStyle(fontSize: 20))),
-        playlistRow(),
-        playlistRow(),
-        playlistRow(),
-      ],
-    );
-  }
-
-  Row playlistRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      // ignore: prefer_const_literals_to_create_immutables
-      children: [
-        SoundCard(soundId: 0),
-        SoundCard(soundId: 1),
-        SoundCard(soundId: 2),
+            child: Text(K.playlists[playlistIndex], textAlign: TextAlign.left, style: TextStyle(fontSize: 20))),
+        SizedBox(
+          height: Get.height * 0.15 * (playlist.length / 3).ceil(),
+          width: Get.width * 0.9,
+          child: GridView.builder(
+            itemCount: playlist.length,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) => SoundCard(sound: playlist[index], playlistId: playlistIndex),
+          ),
+        ),
       ],
     );
   }

@@ -8,25 +8,29 @@ class PlayerController extends GetxController {
   final _player = PlayerModel().obs;
 
   int get playingSoundId => _player.value.playingSoundId;
+  int get playingSoundPlaylistId => _player.value.playingSoundPlaylistId;
   bool get isPlaying => _player.value.isPlaying;
   AudioPlayer get audioPlayer => _player.value.audioPlayer;
   AudioCache get audioCache => _player.value.audioCache;
 
-  void soundControl(String sound, int soundId) {
-    if (soundId == playingSoundId) {
+  void soundControl(String sound, int soundId, int playlistId) {
+    if (soundId == playingSoundId && playlistId == playingSoundPlaylistId) {
       print("same song");
     } else if (!isPlaying && playingSoundId == -1) {
-      playLocal(sound, soundId);
+      print("else if");
+      playLocal(sound, soundId, playlistId);
     } else {
+      print("else");
       stopAudio();
-      playLocal(sound, soundId);
+      playLocal(sound, soundId, playlistId);
     }
   }
 
-  void playLocal(String sound, int soundId) async {
+  void playLocal(String sound, int soundId, int playlistId) async {
     _player.update((val) {
       val!.isPlaying = true;
       val.playingSoundId = soundId;
+      val.playingSoundPlaylistId = playlistId;
     });
 
     _player.update((val) async => val!.audioPlayer = await audioCache.play(sound));
@@ -46,6 +50,7 @@ class PlayerController extends GetxController {
     _player.update((val) {
       val!.isPlaying = false;
       val.playingSoundId = -1;
+      val.playingSoundPlaylistId = -1;
     });
     await audioPlayer.stop();
   }

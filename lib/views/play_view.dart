@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_demo/controllers/sound_controller.dart';
-import 'package:music_player_demo/constaints.dart' as K;
 
 import '../controllers/player_controller.dart';
 
@@ -12,11 +11,14 @@ class PlayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int soundId = Get.arguments;
+    int soundId = Get.arguments[0];
+    int playlistId = Get.arguments[1];
     final playerCon = Get.put(PlayerController());
     final SoundController soundCon = SoundController(id: soundId);
 
-    playerCon.soundControl(soundCon.location, soundCon.id);
+    print(playlistId);
+
+    playerCon.soundControl(soundCon.location, soundCon.id, playlistId);
 
     return SafeArea(
       child: Scaffold(
