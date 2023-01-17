@@ -7,49 +7,46 @@ import '../models/player_model.dart';
 class PlayerController extends GetxController {
   final _player = PlayerModel().obs;
 
-  PlayerController({required newSoundId}) {
-    _player.update((val) {
-      val!.newSoundId = newSoundId;
-      val.isPlaying = true;
-    });
-  }
-
-  int get newSoundId => _player.value.newSoundId;
+  int get playingSoundId => _player.value.playingSoundId;
   bool get isPlaying => _player.value.isPlaying;
   AudioPlayer get audioPlayer => _player.value.audioPlayer;
   AudioCache get audioCache => _player.value.audioCache;
 
-  // void soundControl(String sound, int newSoundId) {
-  //   if (newSoundId != newSoundId) {
-  //     stopAudio();
-  //     playLocal(sound);
-  //   } else if (!isPlaying) {
-  //     playLocal(sound);
-  //   } else {
-  //     print("same song");
-  //   }
-  // }
+  void soundControl(String sound, int soundId) {
+    if (soundId == playingSoundId) {
+      print("same song");
+    } else if (!isPlaying && playingSoundId == -1) {
+      playLocal(sound, soundId);
+    } else {
+      stopAudio();
+      playLocal(sound, soundId);
+    }
+  }
 
-  void playLocal(String sound) async {
-    print("play");
-    _player.update((val) async {
-      val!.audioPlayer = await audioCache.play(sound);
-      val.isPlaying = true;
+  void playLocal(String sound, int soundId) async {
+    _player.update((val) {
+      val!.isPlaying = true;
+      val.playingSoundId = soundId;
     });
-    print("is playing $isPlaying");
+
+    _player.update((val) async => val!.audioPlayer = await audioCache.play(sound));
   }
 
   void pauseAudio() async {
-    print(audioPlayer.playerId);
-    print(isPlaying);
-    await audioPlayer.pause().then((value) => _player.update((val) => val!.isPlaying = false));
+    _player.update((val) => val!.isPlaying = false);
+    await audioPlayer.pause();
   }
 
   void resumeAudio() async {
-    await audioPlayer.resume().then((value) => _player.update((val) => val!.isPlaying = true));
+    _player.update((val) => val!.isPlaying = true);
+    await audioPlayer.resume();
   }
 
   void stopAudio() async {
-    await audioPlayer.stop().then((value) => _player.update((val) => val!.isPlaying = false));
+    _player.update((val) {
+      val!.isPlaying = false;
+      val.playingSoundId = -1;
+    });
+    await audioPlayer.stop();
   }
 }

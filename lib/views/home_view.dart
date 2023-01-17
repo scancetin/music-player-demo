@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/player_controller.dart';
 import 'widgets/sound_card.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,6 +10,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final playerCon = Get.put(PlayerController());
+
     return Scaffold(
         floatingActionButton: settings(),
         body: Column(

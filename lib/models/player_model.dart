@@ -4,6 +4,12 @@ class PlayerModel {
   late AudioPlayer audioPlayer;
   AudioCache audioCache = AudioCache();
 
-  late int newSoundId;
-  late bool isPlaying;
+  // int playingSoundPlaylistId;
+  int playingSoundId;
+  bool isPlaying;
+
+  PlayerModel({
+    this.playingSoundId = -1,
+    this.isPlaying = false,
+  });
 }

@@ -13,10 +13,10 @@ class PlayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int soundId = Get.arguments;
-    final playerCon = PlayerController(newSoundId: 0);
+    final playerCon = Get.put(PlayerController());
     final SoundController soundCon = SoundController(id: soundId);
 
-    // playerCon.soundControl(soundCon.location, soundCon.id);
+    playerCon.soundControl(soundCon.location, soundCon.id);
 
     return SafeArea(
       child: Scaffold(
@@ -25,8 +25,7 @@ class PlayView extends StatelessWidget {
           const Spacer(flex: 2),
           soundImage(soundCon.image),
           const Spacer(flex: 1),
-          // customSlider(),
-          soundUtils(playerCon),
+          soundUtils(),
           const Spacer(flex: 1),
           Container(
             color: Colors.white,
@@ -57,32 +56,7 @@ class PlayView extends StatelessWidget {
     );
   }
 
-  Widget customSlider() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: Column(
-        children: [
-          Slider(
-            min: 0,
-            max: 180,
-            value: 15,
-            onChanged: ((value) => print("changed")),
-            onChangeEnd: ((value) => print("end")),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text("00:00"),
-              const Text("03:00"),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  SizedBox soundUtils(PlayerController playerCon) {
+  SizedBox soundUtils() {
     return SizedBox(
       height: Get.height * 0.1,
       width: Get.width,
@@ -94,17 +68,18 @@ class PlayView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
             iconSize: Get.width * 0.07,
           ),
-          CircleAvatar(
-            backgroundColor: Colors.redAccent,
-            radius: Get.width * 0.07,
-            child: IconButton(
-              // onPressed: () => playLocal(),
-              onPressed: () => playerCon.isPlaying ? playerCon.pauseAudio() : playerCon.resumeAudio(),
-              icon: const Icon(Icons.play_arrow_rounded),
-              iconSize: Get.width * 0.09,
-              color: Colors.white,
-            ),
-          ),
+          GetX<PlayerController>(builder: (playerCon) {
+            return CircleAvatar(
+              backgroundColor: Colors.redAccent,
+              radius: Get.width * 0.07,
+              child: IconButton(
+                onPressed: () => playerCon.isPlaying ? playerCon.pauseAudio() : playerCon.resumeAudio(),
+                icon: playerCon.isPlaying ? const Icon(Icons.pause_rounded) : const Icon(Icons.play_arrow_rounded),
+                iconSize: Get.width * 0.09,
+                color: Colors.white,
+              ),
+            );
+          }),
           IconButton(
             onPressed: () => print("soname"),
             icon: const Icon(Icons.timer_outlined),
