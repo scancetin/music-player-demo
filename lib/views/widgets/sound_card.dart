@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_player_demo/constaints.dart' as K;
 
 class SoundCard extends StatelessWidget {
   final Map sound;

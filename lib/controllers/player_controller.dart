@@ -24,6 +24,8 @@ class PlayerController extends GetxController {
       stopAudio();
       playLocal(sound, soundId, playlistId);
     }
+
+    print(soundId);
   }
 
   void playLocal(String sound, int soundId, int playlistId) async {

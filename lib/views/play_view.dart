@@ -14,9 +14,7 @@ class PlayView extends StatelessWidget {
     int soundId = Get.arguments[0];
     int playlistId = Get.arguments[1];
     final playerCon = Get.put(PlayerController());
-    final SoundController soundCon = SoundController(id: soundId);
-
-    print(playlistId);
+    final SoundController soundCon = SoundController(id: soundId, playlistId: playlistId);
 
     playerCon.soundControl(soundCon.location, soundCon.id, playlistId);
 
