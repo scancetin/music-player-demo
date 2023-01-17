@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   audioplayers: ^0.20.1
+  assets_audio_player: ^3.0.6
+  simple_circular_progress_bar: ^1.0.2
+  stop_watch_timer: ^2.0.0
   
 dev_dependencies:
   flutter_test:
@@ -65,7 +68,7 @@ flutter:
   assets:
     - assets/images/
     - assets/sounds/
-  #   - images/a_dot_ham.jpeg
+    - assets/sounds/example.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

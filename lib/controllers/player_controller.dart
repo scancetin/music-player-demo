@@ -1,31 +1,43 @@
 // ignore_for_file: avoid_print
-
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
 import '../models/player_model.dart';
 
 class PlayerController extends GetxController {
+  late Timer timer = Timer(const Duration(seconds: 1), () {});
   final _player = PlayerModel().obs;
+  final assetsAudioPlayer = AssetsAudioPlayer();
 
   int get playingSoundId => _player.value.playingSoundId;
   int get playingSoundPlaylistId => _player.value.playingSoundPlaylistId;
   bool get isPlaying => _player.value.isPlaying;
-  AudioPlayer get audioPlayer => _player.value.audioPlayer;
-  AudioCache get audioCache => _player.value.audioCache;
+  int get timerDuration => _player.value.timerDuration;
+  int get currentDuration => _player.value.currentDuration;
 
   void soundControl(String sound, int soundId, int playlistId) {
     if (soundId == playingSoundId && playlistId == playingSoundPlaylistId) {
-      print("same song");
-    } else if (!isPlaying && playingSoundId == -1) {
-      print("else if");
-      playLocal(sound, soundId, playlistId);
+      if (!isPlaying) {
+        resumeAudio();
+      }
     } else {
-      print("else");
       stopAudio();
+      timerHandler();
       playLocal(sound, soundId, playlistId);
     }
+  }
 
-    print(soundId);
+  void timerHandler() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _player.update((val) => _player.value.currentDuration++);
+      print("currentDuration: $currentDuration");
+      print("timerDuration: $timerDuration");
+      print("timerTick: ${timer.tick}");
+      if (timerDuration == currentDuration) {
+        timer.cancel();
+        stopAudio();
+      }
+    });
   }
 
   void playLocal(String sound, int soundId, int playlistId) async {
@@ -35,17 +47,25 @@ class PlayerController extends GetxController {
       val.playingSoundPlaylistId = playlistId;
     });
 
-    _player.update((val) async => val!.audioPlayer = await audioCache.play(sound));
+    await assetsAudioPlayer.open(
+      Audio.network("https://file-examples.com/storage/fe2879c03363c669a9ef954/2017/11/file_example_MP3_700KB.mp3"),
+      loopMode: LoopMode.single,
+    );
   }
 
   void pauseAudio() async {
-    _player.update((val) => val!.isPlaying = false);
-    await audioPlayer.pause();
+    _player.update((val) {
+      val!.isPlaying = false;
+    });
+    assetsAudioPlayer.pause();
+    timer.cancel();
   }
 
   void resumeAudio() async {
     _player.update((val) => val!.isPlaying = true);
-    await audioPlayer.resume();
+
+    timerHandler();
+    assetsAudioPlayer.play();
   }
 
   void stopAudio() async {
@@ -53,7 +73,9 @@ class PlayerController extends GetxController {
       val!.isPlaying = false;
       val.playingSoundId = -1;
       val.playingSoundPlaylistId = -1;
+      val.currentDuration = 0;
     });
-    await audioPlayer.stop();
+    timer.cancel();
+    assetsAudioPlayer.stop();
   }
 }

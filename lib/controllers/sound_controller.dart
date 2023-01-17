@@ -9,8 +9,6 @@ class SoundController {
     _sound.name = K.playlistSounds[playlistId][id]["name"];
     _sound.location = K.playlistSounds[playlistId][id]["location"];
     _sound.image = K.playlistSounds[playlistId][id]["image"];
-
-    print(_sound.name);
   }
 
   int get id => _sound.id;

@@ -1,23 +1,36 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_const_constructors
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_demo/controllers/sound_controller.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 import '../controllers/player_controller.dart';
 
-class PlayView extends StatelessWidget {
+class PlayView extends StatefulWidget {
   const PlayView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    int soundId = Get.arguments[0];
-    int playlistId = Get.arguments[1];
-    final playerCon = Get.put(PlayerController());
-    final SoundController soundCon = SoundController(id: soundId, playlistId: playlistId);
+  State<PlayView> createState() => _PlayViewState();
+}
 
+class _PlayViewState extends State<PlayView> {
+  final int soundId = Get.arguments[0];
+  final int playlistId = Get.arguments[1];
+  final playerCon = Get.put(PlayerController());
+  late SoundController soundCon;
+
+  @override
+  void initState() {
+    soundCon = SoundController(id: soundId, playlistId: playlistId);
     playerCon.soundControl(soundCon.location, soundCon.id, playlistId);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           body: Column(
@@ -49,9 +62,22 @@ class PlayView extends StatelessWidget {
           child: CircleAvatar(
             radius: Get.width * 0.15,
             backgroundColor: Colors.black54,
-            child: Text("30", style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
+            child: Text(Get.find<PlayerController>().currentDuration.toString(), style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
           ),
         ),
+
+        // child: Center(
+        //   child: CircleAvatar(
+        //     radius: Get.width * 0.15,
+        //     backgroundColor: Colors.black54,
+        //     child: SimpleCircularProgressBar(
+        //       progressColors: const [Colors.cyan],
+        //       animationDuration: 10,
+        //       size: Get.width * 0.30,
+        //       valueNotifier: ValueNotifier(5),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
@@ -81,7 +107,7 @@ class PlayView extends StatelessWidget {
             );
           }),
           IconButton(
-            onPressed: () => print("soname"),
+            onPressed: () => print("timer button"),
             icon: const Icon(Icons.timer_outlined),
             iconSize: Get.width * 0.07,
           ),
