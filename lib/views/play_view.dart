@@ -1,13 +1,10 @@
 // ignore_for_file: avoid_print, prefer_const_constructors
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_demo/controllers/sound_controller.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-
 import '../controllers/player_controller.dart';
+import '../utils.dart';
 
 class PlayView extends StatefulWidget {
   const PlayView({super.key});
@@ -59,43 +56,54 @@ class _PlayViewState extends State<PlayView> {
         width: Get.width * 0.9,
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
         child: Center(
-          child: CircleAvatar(
-            radius: Get.width * 0.15,
-            backgroundColor: Colors.black54,
-            child: Text(Get.find<PlayerController>().currentDuration.toString(), style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
+          child: GetX<PlayerController>(
+            builder: (playerCon) {
+              return CircleAvatar(
+                radius: Get.width * 0.15,
+                backgroundColor: Colors.black54,
+                child: Text(playerCon.remainDuration >= 0 ? playerCon.remainDuration.toString() : "", style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
+              );
+            },
           ),
         ),
 
         // child: Center(
-        //   child: CircleAvatar(
-        //     radius: Get.width * 0.15,
-        //     backgroundColor: Colors.black54,
-        //     child: SimpleCircularProgressBar(
-        //       progressColors: const [Colors.cyan],
-        //       animationDuration: 10,
-        //       size: Get.width * 0.30,
-        //       valueNotifier: ValueNotifier(5),
-        //     ),
-        //   ),
+        //   child: Obx(() {
+        //     return CircleAvatar(
+        //       radius: Get.width * 0.15,
+        //       backgroundColor: Colors.black54,
+        //       child: SimpleCircularProgressBar(
+        //         progressColors: const [Colors.cyan],
+        //         // animationDuration: playerCon.timerDuration,
+        //         // startAngle: playerCon.currentDuration.toDouble(),
+        //         maxValue: playerCon.timerDuration.toDouble(),
+        //         size: Get.width * 0.30,
+        //         valueNotifier: ValueNotifier(playerCon.remainDuration.toDouble()),
+        //         onGetText: (p0) => Text(playerCon.remainDuration.toString()),
+        //       ),
+        //     );
+        //   }),
         // ),
       ),
     );
   }
 
   SizedBox soundUtils() {
+    Utils utils = Utils();
+
     return SizedBox(
       height: Get.height * 0.1,
       width: Get.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            iconSize: Get.width * 0.07,
-          ),
-          GetX<PlayerController>(builder: (playerCon) {
-            return CircleAvatar(
+      child: GetX<PlayerController>(builder: (playerCon) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(Icons.arrow_back_ios_new_rounded),
+              iconSize: Get.width * 0.07,
+            ),
+            CircleAvatar(
               backgroundColor: Colors.redAccent,
               radius: Get.width * 0.07,
               child: IconButton(
@@ -104,15 +112,15 @@ class _PlayViewState extends State<PlayView> {
                 iconSize: Get.width * 0.09,
                 color: Colors.white,
               ),
-            );
-          }),
-          IconButton(
-            onPressed: () => print("timer button"),
-            icon: const Icon(Icons.timer_outlined),
-            iconSize: Get.width * 0.07,
-          ),
-        ],
-      ),
+            ),
+            IconButton(
+              onPressed: () => utils.setTimerDialog(),
+              icon: const Icon(Icons.timer_outlined),
+              iconSize: Get.width * 0.07,
+            ),
+          ],
+        );
+      }),
     );
   }
 }

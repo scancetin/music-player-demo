@@ -14,6 +14,14 @@ class PlayerController extends GetxController {
   bool get isPlaying => _player.value.isPlaying;
   int get timerDuration => _player.value.timerDuration;
   int get currentDuration => _player.value.currentDuration;
+  int get remainDuration => _player.value.timerDuration - _player.value.currentDuration;
+
+  void setDuration(int duration) {
+    _player.update((val) {
+      val!.timerDuration = duration;
+      val.currentDuration = 0;
+    });
+  }
 
   void soundControl(String sound, int soundId, int playlistId) {
     if (soundId == playingSoundId && playlistId == playingSoundPlaylistId) {

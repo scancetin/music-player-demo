@@ -17,16 +17,6 @@ class HomeView extends StatelessWidget {
         floatingActionButton: settings(),
         body: Column(
           children: [
-            // Expanded(
-            //   child: ListView(
-            //     children: [
-            //       playlistTemplate(),
-            //       playlistTemplate(),
-            //       playlistTemplate(),
-            //       playlistTemplate(),
-            //     ],
-            //   ),
-            // ),
             Expanded(
               child: ListView.builder(
                 itemCount: K.playlists.length,
@@ -63,11 +53,11 @@ class HomeView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            padding: EdgeInsets.only(left: Get.width * 0.1, top: Get.height * 0, bottom: 10),
+            padding: EdgeInsets.only(left: Get.width * 0.1, top: Get.height * 0.03, bottom: 10),
             alignment: Alignment.topLeft,
             child: Text(K.playlists[playlistIndex], textAlign: TextAlign.left, style: TextStyle(fontSize: 20))),
         SizedBox(
-          height: Get.height * 0.15 * (playlist.length / 3).ceil(),
+          height: Get.height * 0.11 * (playlist.length / 3).ceil(),
           width: Get.width * 0.9,
           child: GridView.builder(
             itemCount: playlist.length,

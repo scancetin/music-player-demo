@@ -288,14 +288,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  simple_circular_progress_bar:
-    dependency: "direct main"
-    description:
-      name: simple_circular_progress_bar
-      sha256: e661ca942fbc617298e975b41fde19003d995de73ca6c2a1526c54d52f07151b
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -317,14 +309,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  stop_watch_timer:
-    dependency: "direct main"
-    description:
-      name: stop_watch_timer
-      sha256: eb690e4f6d983ba12ddfbf51a5d489fdba8b64982b9651cb538650888cec2886
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   stream_channel:
     dependency: transitive
     description:
@@ -381,6 +365,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  widget_circular_animator:
+    dependency: "direct main"
+    description:
+      name: widget_circular_animator
+      sha256: "3be8c05cfe32eceda237c7b68339e60940a84011df80c63bd4e71bd0daa7a770"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   win32:
     dependency: transitive
     description:
