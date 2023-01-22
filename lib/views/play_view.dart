@@ -22,7 +22,7 @@ class _PlayViewState extends State<PlayView> {
   @override
   void initState() {
     soundCon = SoundController(id: soundId, playlistId: playlistId);
-    playerCon.soundControl(soundCon.location, soundCon.id, playlistId);
+    playerCon.soundControl(soundCon, playlistId);
     super.initState();
   }
 
@@ -66,24 +66,6 @@ class _PlayViewState extends State<PlayView> {
             },
           ),
         ),
-
-        // child: Center(
-        //   child: Obx(() {
-        //     return CircleAvatar(
-        //       radius: Get.width * 0.15,
-        //       backgroundColor: Colors.black54,
-        //       child: SimpleCircularProgressBar(
-        //         progressColors: const [Colors.cyan],
-        //         // animationDuration: playerCon.timerDuration,
-        //         // startAngle: playerCon.currentDuration.toDouble(),
-        //         maxValue: playerCon.timerDuration.toDouble(),
-        //         size: Get.width * 0.30,
-        //         valueNotifier: ValueNotifier(playerCon.remainDuration.toDouble()),
-        //         onGetText: (p0) => Text(playerCon.remainDuration.toString()),
-        //       ),
-        //     );
-        //   }),
-        // ),
       ),
     );
   }

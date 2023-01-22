@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
 import '../models/player_model.dart';
+import 'sound_controller.dart';
+import 'package:music_player_demo/constaints.dart' as K;
 
 class PlayerController extends GetxController {
   late Timer timer = Timer(const Duration(seconds: 1), () {});
@@ -23,15 +25,15 @@ class PlayerController extends GetxController {
     });
   }
 
-  void soundControl(String sound, int soundId, int playlistId) {
-    if (soundId == playingSoundId && playlistId == playingSoundPlaylistId) {
+  void soundControl(SoundController soundCon, int playlistId) {
+    if (soundCon.id == playingSoundId && playlistId == playingSoundPlaylistId) {
       if (!isPlaying) {
         resumeAudio();
       }
     } else {
       stopAudio();
       timerHandler();
-      playLocal(sound, soundId, playlistId);
+      playLocal(soundCon, playlistId);
     }
   }
 
@@ -48,17 +50,31 @@ class PlayerController extends GetxController {
     });
   }
 
-  void playLocal(String sound, int soundId, int playlistId) async {
+  void playLocal(SoundController soundCon, int playlistId) async {
     _player.update((val) {
       val!.isPlaying = true;
-      val.playingSoundId = soundId;
+      val.playingSoundId = soundCon.id;
       val.playingSoundPlaylistId = playlistId;
     });
 
     await assetsAudioPlayer.open(
-      Audio.network("https://file-examples.com/storage/fe2879c03363c669a9ef954/2017/11/file_example_MP3_700KB.mp3"),
+      Audio.network(
+        "https://file-examples.com/storage/fe7122043963cd639947840/2017/11/file_example_MP3_700KB.mp3",
+        metas: Metas(title: soundCon.name, artist: K.playlists[playlistId], album: K.playlists[playlistId], image: MetasImage.asset(soundCon.image)),
+      ),
       loopMode: LoopMode.single,
+      showNotification: true,
+      notificationSettings: NotificationSettings(
+        prevEnabled: false,
+        nextEnabled: false,
+        customPlayPauseAction: (player) => isPlaying ? pauseAudio() : resumeAudio(),
+        customStopAction: (player) => stopAudio(),
+      ),
     );
+
+    // assetsAudioPlayer.open(
+    //   Audio("assets/sounds/example.wav"),
+    // );
   }
 
   void pauseAudio() async {

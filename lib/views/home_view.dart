@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/player_controller.dart';
 import 'widgets/sound_card.dart';
 import 'package:music_player_demo/constaints.dart' as K;
+import '../utils.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -34,14 +35,17 @@ class HomeView extends StatelessWidget {
   }
 
   Column settings() {
+    Utils utils = Utils();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FloatingActionButton(backgroundColor: Colors.blue, onPressed: (() => print("timer")), child: const Icon(Icons.timer_outlined, color: Colors.white)),
+        FloatingActionButton(backgroundColor: Colors.blue, onPressed: (() => utils.setTimerDialog()), child: const Icon(Icons.timer_outlined, color: Colors.white)),
         const SizedBox(height: 10),
-        // FloatingActionButton(backgroundColor: Colors.red, onPressed: (() => print("favorites")), child: const Icon(Icons.heart_broken_sharp, color: Colors.white)),
-        // const SizedBox(height: 10),
-        // FloatingActionButton(backgroundColor: Colors.black, onPressed: (() => print("settings")), child: const Icon(Icons.settings, color: Colors.white)),
+        FloatingActionButton(
+            backgroundColor: Colors.red, onPressed: (() => print("gift - total hours spent")), child: const Icon(Icons.card_giftcard_rounded, color: Colors.white)),
+        const SizedBox(height: 10),
+        FloatingActionButton(backgroundColor: Colors.black, onPressed: (() => print("settings")), child: const Icon(Icons.settings, color: Colors.white)),
       ],
     );
   }
