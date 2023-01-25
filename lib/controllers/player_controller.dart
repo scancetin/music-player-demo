@@ -50,16 +50,31 @@ class PlayerController extends GetxController {
     });
   }
 
-  void playLocal(SoundController soundCon, int playlistId) async {
+  void playLocal(SoundController soundCon, int playlistId) {
     _player.update((val) {
       val!.isPlaying = true;
       val.playingSoundId = soundCon.id;
       val.playingSoundPlaylistId = playlistId;
     });
 
-    await assetsAudioPlayer.open(
-      Audio.network(
-        "https://file-examples.com/storage/fe7122043963cd639947840/2017/11/file_example_MP3_700KB.mp3",
+    // await assetsAudioPlayer.open(
+    //   Audio.network(
+    //     "https://file-examples.com/storage/fe7122043963cd639947840/2017/11/file_example_MP3_700KB.mp3",
+    //     metas: Metas(title: soundCon.name, artist: K.playlists[playlistId], album: K.playlists[playlistId], image: MetasImage.asset(soundCon.image)),
+    //   ),
+    //   loopMode: LoopMode.single,
+    //   showNotification: true,
+    //   notificationSettings: NotificationSettings(
+    //     prevEnabled: false,
+    //     nextEnabled: false,
+    //     customPlayPauseAction: (player) => isPlaying ? pauseAudio() : resumeAudio(),
+    //     customStopAction: (player) => stopAudio(),
+    //   ),
+    // );
+
+    assetsAudioPlayer.open(
+      Audio(
+        soundCon.location,
         metas: Metas(title: soundCon.name, artist: K.playlists[playlistId], album: K.playlists[playlistId], image: MetasImage.asset(soundCon.image)),
       ),
       loopMode: LoopMode.single,
@@ -71,10 +86,6 @@ class PlayerController extends GetxController {
         customStopAction: (player) => stopAudio(),
       ),
     );
-
-    // assetsAudioPlayer.open(
-    //   Audio("assets/sounds/example.wav"),
-    // );
   }
 
   void pauseAudio() async {

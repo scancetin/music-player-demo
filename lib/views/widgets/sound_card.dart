@@ -16,7 +16,7 @@ class SoundCard extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(sound["image"]), fit: BoxFit.cover),
           ),
-          child: Center(child: Text(sound["name"], style: const TextStyle(backgroundColor: Colors.black87))),
+          child: Center(child: Text(sound["name"], style: const TextStyle(backgroundColor: Colors.black87, fontSize: 10))),
         ),
       ),
     );

@@ -40,12 +40,26 @@ class HomeView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FloatingActionButton(backgroundColor: Colors.blue, onPressed: (() => utils.setTimerDialog()), child: const Icon(Icons.timer_outlined, color: Colors.white)),
+        FloatingActionButton(
+          heroTag: "timer",
+          backgroundColor: Colors.blue,
+          onPressed: (() => utils.setTimerDialog()),
+          child: const Icon(Icons.timer_outlined, color: Colors.white),
+        ),
         const SizedBox(height: 10),
         FloatingActionButton(
-            backgroundColor: Colors.red, onPressed: (() => print("gift - total hours spent")), child: const Icon(Icons.card_giftcard_rounded, color: Colors.white)),
+          heroTag: "gift",
+          backgroundColor: Colors.red,
+          onPressed: (() => print("gift - total hours spent")),
+          child: const Icon(Icons.card_giftcard_rounded, color: Colors.white),
+        ),
         const SizedBox(height: 10),
-        FloatingActionButton(backgroundColor: Colors.black, onPressed: (() => print("settings")), child: const Icon(Icons.settings, color: Colors.white)),
+        FloatingActionButton(
+          heroTag: "settings",
+          backgroundColor: Colors.black,
+          onPressed: (() => print("settings - theme, notifications")),
+          child: const Icon(Icons.settings, color: Colors.white),
+        ),
       ],
     );
   }
@@ -57,7 +71,7 @@ class HomeView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            padding: EdgeInsets.only(left: Get.width * 0.1, top: Get.height * 0.03, bottom: 10),
+            padding: EdgeInsets.only(left: Get.width * 0.06, top: Get.height * 0.03, bottom: 10),
             alignment: Alignment.topLeft,
             child: Text(K.playlists[playlistIndex], textAlign: TextAlign.left, style: TextStyle(fontSize: 20))),
         SizedBox(
@@ -74,6 +88,11 @@ class HomeView extends StatelessWidget {
             ),
             itemBuilder: (context, index) => SoundCard(sound: playlist[index], playlistId: playlistIndex),
           ),
+        ),
+        SizedBox(
+          width: Get.width * 0.9,
+          height: Get.height * 0.015,
+          child: Card(color: Colors.grey),
         ),
       ],
     );
