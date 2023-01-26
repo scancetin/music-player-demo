@@ -14,24 +14,29 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final playerCon = Get.put(PlayerController());
 
-    return Scaffold(
-        floatingActionButton: settings(),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: K.playlists.length,
-                itemBuilder: (context, playlistIndex) => playlistTemplate(playlistIndex),
-              ),
+    return SafeArea(
+      child: Scaffold(
+          floatingActionButton: settings(),
+          body: Container(
+            color: Colors.black,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: K.playlists.length,
+                    itemBuilder: (context, playlistIndex) => playlistTemplate(playlistIndex),
+                  ),
+                ),
+                // Container(
+                //   color: Colors.black,
+                //   width: double.infinity,
+                //   height: 50,
+                //   child: const Text("temp"),
+                // )
+              ],
             ),
-            Container(
-              color: Colors.black,
-              width: double.infinity,
-              height: 50,
-              child: const Text("temp"),
-            )
-          ],
-        ));
+          )),
+    );
   }
 
   Column settings() {
@@ -42,24 +47,24 @@ class HomeView extends StatelessWidget {
       children: [
         FloatingActionButton(
           heroTag: "timer",
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.red,
           onPressed: (() => utils.setTimerDialog()),
           child: const Icon(Icons.timer_outlined, color: Colors.white),
         ),
-        const SizedBox(height: 10),
-        FloatingActionButton(
-          heroTag: "gift",
-          backgroundColor: Colors.red,
-          onPressed: (() => print("gift - total hours spent")),
-          child: const Icon(Icons.card_giftcard_rounded, color: Colors.white),
-        ),
-        const SizedBox(height: 10),
-        FloatingActionButton(
-          heroTag: "settings",
-          backgroundColor: Colors.black,
-          onPressed: (() => print("settings - theme, notifications")),
-          child: const Icon(Icons.settings, color: Colors.white),
-        ),
+        // const SizedBox(height: 10),
+        // FloatingActionButton(
+        //   heroTag: "gift",
+        //   backgroundColor: Colors.red,
+        //   onPressed: (() => print("gift - total hours spent")),
+        //   child: const Icon(Icons.card_giftcard_rounded, color: Colors.white),
+        // ),
+        // const SizedBox(height: 10),
+        // FloatingActionButton(
+        //   heroTag: "settings",
+        //   backgroundColor: Colors.black,
+        //   onPressed: (() => print("settings - theme, notifications")),
+        //   child: const Icon(Icons.settings, color: Colors.white),
+        // ),
       ],
     );
   }
@@ -70,21 +75,21 @@ class HomeView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-            padding: EdgeInsets.only(left: Get.width * 0.06, top: Get.height * 0.03, bottom: 10),
-            alignment: Alignment.topLeft,
-            child: Text(K.playlists[playlistIndex], textAlign: TextAlign.left, style: TextStyle(fontSize: 20))),
+        Padding(
+          padding: EdgeInsets.only(top: Get.height * 0.03, bottom: Get.height * 0.03),
+          child: Text(K.playlists[playlistIndex], textAlign: TextAlign.center, style: TextStyle(fontSize: 25)),
+        ),
         SizedBox(
-          height: Get.height * 0.11 * (playlist.length / 3).ceil(),
+          height: Get.width * 0.5 * (playlist.length / 2).ceil(),
           width: Get.width * 0.9,
           child: GridView.builder(
             itemCount: playlist.length,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              childAspectRatio: 1,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
             ),
             itemBuilder: (context, index) => SoundCard(sound: playlist[index], playlistId: playlistIndex),
           ),
@@ -92,7 +97,7 @@ class HomeView extends StatelessWidget {
         SizedBox(
           width: Get.width * 0.9,
           height: Get.height * 0.015,
-          child: Card(color: Colors.grey),
+          child: Card(color: Colors.black54),
         ),
       ],
     );

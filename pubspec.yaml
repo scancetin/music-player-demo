@@ -39,7 +39,9 @@ dependencies:
   get: ^4.6.5
   audioplayers: ^0.20.1
   assets_audio_player: ^3.0.6
-  widget_circular_animator: ^1.0.0
+  percent_indicator: ^4.2.2
+
+  circular_countdown: ^2.1.0
   
 dev_dependencies:
   flutter_test:

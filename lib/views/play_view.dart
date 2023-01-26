@@ -1,8 +1,10 @@
-// ignore_for_file: avoid_print, 
+// ignore_for_file: avoid_print,
 
+import 'package:circular_countdown/circular_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_demo/controllers/sound_controller.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../controllers/player_controller.dart';
 import '../utils.dart';
 
@@ -30,20 +32,23 @@ class _PlayViewState extends State<PlayView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(
-        children: [
-          const Spacer(flex: 2),
-          soundImage(soundCon.image),
-          const Spacer(flex: 1),
-          soundUtils(),
-          const Spacer(flex: 1),
-          Container(
-            color: Colors.white,
-            width: double.infinity,
-            height: 50,
-            child: const Text("temp"),
-          )
-        ],
+          body: Container(
+        color: Colors.black,
+        child: Column(
+          children: [
+            const Spacer(flex: 2),
+            soundImage(soundCon.image),
+            const Spacer(flex: 1),
+            soundUtils(),
+            const Spacer(flex: 1),
+            // Container(
+            //   color: Colors.white,
+            //   width: double.infinity,
+            //   height: 50,
+            //   child: const Text("temp"),
+            // )
+          ],
+        ),
       )),
     );
   }
@@ -58,11 +63,20 @@ class _PlayViewState extends State<PlayView> {
         child: Center(
           child: GetX<PlayerController>(
             builder: (playerCon) {
-              return CircleAvatar(
-                radius: Get.width * 0.15,
-                backgroundColor: Colors.black54,
-                child: Text(playerCon.remainDuration >= 0 ? playerCon.remainDuration.toString() : "", style: TextStyle(color: Colors.white, fontSize: Get.width * 0.15)),
-              );
+              return playerCon.remainDuration > 0
+                  ? CircularPercentIndicator(
+                      radius: Get.width * 0.15,
+                      lineWidth: 8.0,
+                      percent: (100 / 60 * (playerCon.remainDuration % 60)) / 100,
+                      center: CircleAvatar(
+                        radius: Get.width * 0.15,
+                        backgroundColor: Colors.black54,
+                        child: Text((playerCon.remainDuration / 60).floor().toString(), style: TextStyle(color: Colors.white, fontSize: Get.width * 0.1)),
+                      ),
+                      progressColor: Colors.green,
+                      backgroundColor: Colors.black,
+                    )
+                  : Container();
             },
           ),
         ),
@@ -86,7 +100,7 @@ class _PlayViewState extends State<PlayView> {
               iconSize: Get.width * 0.07,
             ),
             CircleAvatar(
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.red,
               radius: Get.width * 0.07,
               child: IconButton(
                 onPressed: () => playerCon.isPlaying ? playerCon.pauseAudio() : playerCon.resumeAudio(),
