@@ -23,8 +23,8 @@ class HomeView extends StatelessWidget {
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                    expandedHeight: Get.height * 0.5,
-                    flexibleSpace: FlexibleSpaceBar(background: Image.asset("assets/images/sample-dusk.jpg", fit: BoxFit.cover)),
+                    expandedHeight: Get.height * 0.15,
+                    flexibleSpace: FlexibleSpaceBar(background: Image.asset("assets/images/sample-moon2.jpg", fit: BoxFit.cover)),
                   ),
                 ];
               },

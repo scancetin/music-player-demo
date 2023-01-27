@@ -1,4 +1,4 @@
-package com.example.music_player_demo
+package com.oly.sleepy
 
 import io.flutter.embedding.android.FlutterActivity
 

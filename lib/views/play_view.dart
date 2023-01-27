@@ -58,13 +58,19 @@ class _PlayViewState extends State<PlayView> {
             builder: (playerCon) {
               return playerCon.remainDuration > 0
                   ? CircularPercentIndicator(
-                      radius: Get.width * 0.15,
+                      radius: Get.width * 0.2,
                       lineWidth: 8.0,
                       percent: (100 / 60 * (playerCon.remainDuration % 60)) / 100,
                       center: CircleAvatar(
-                        radius: Get.width * 0.15,
+                        radius: Get.width * 0.2,
                         backgroundColor: Colors.black54,
-                        child: Text((playerCon.remainDuration / 60).floor().toString(), style: TextStyle(color: Colors.white, fontSize: Get.width * 0.1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text((playerCon.remainDuration / 60).floor().toString(), style: TextStyle(color: Colors.white, fontSize: Get.width * 0.12)),
+                            Text("m", style: TextStyle(color: Colors.white, fontSize: Get.width * 0.08), textAlign: TextAlign.end),
+                          ],
+                        ),
                       ),
                       progressColor: Colors.green,
                       backgroundColor: Colors.black,
