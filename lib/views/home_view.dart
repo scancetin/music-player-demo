@@ -19,21 +19,19 @@ class HomeView extends StatelessWidget {
           floatingActionButton: settings(),
           body: Container(
             color: Colors.black,
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: K.playlists.length,
-                    itemBuilder: (context, playlistIndex) => playlistTemplate(playlistIndex),
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    expandedHeight: Get.height * 0.5,
+                    flexibleSpace: FlexibleSpaceBar(background: Image.asset("assets/images/sample-dusk.jpg", fit: BoxFit.cover)),
                   ),
-                ),
-                // Container(
-                //   color: Colors.black,
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: const Text("temp"),
-                // )
-              ],
+                ];
+              },
+              body: ListView.builder(
+                itemCount: K.playlists.length,
+                itemBuilder: (context, playlistIndex) => playlistTemplate(playlistIndex),
+              ),
             ),
           )),
     );
@@ -97,7 +95,8 @@ class HomeView extends StatelessWidget {
         SizedBox(
           width: Get.width * 0.9,
           height: Get.height * 0.015,
-          child: Card(color: Colors.black54),
+          // child: Card(color: Colors.green[900]),
+          child: Card(color: Colors.grey[900]),
         ),
       ],
     );

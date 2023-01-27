@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print,
 
-import 'package:circular_countdown/circular_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_player_demo/controllers/sound_controller.dart';
@@ -41,12 +40,6 @@ class _PlayViewState extends State<PlayView> {
             const Spacer(flex: 1),
             soundUtils(),
             const Spacer(flex: 1),
-            // Container(
-            //   color: Colors.white,
-            //   width: double.infinity,
-            //   height: 50,
-            //   child: const Text("temp"),
-            // )
           ],
         ),
       )),

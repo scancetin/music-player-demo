@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'controllers/player_controller.dart';
 
 class Utils {
@@ -11,7 +10,7 @@ class Utils {
         title: "",
         middleText: "Set duration",
         middleTextStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        contentPadding: EdgeInsets.only(bottom: 20),
+        contentPadding: const EdgeInsets.only(bottom: 20),
         actions: [
           TextButton(
               onPressed: () {

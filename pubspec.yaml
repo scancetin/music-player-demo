@@ -41,8 +41,6 @@ dependencies:
   assets_audio_player: ^3.0.6
   percent_indicator: ^4.2.2
 
-  circular_countdown: ^2.1.0
-  
 dev_dependencies:
   flutter_test:
     sdk: flutter
